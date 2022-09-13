@@ -7,3 +7,4 @@
 /iris.csv
 /train.arrow
 /test.arrow
+/eval.json

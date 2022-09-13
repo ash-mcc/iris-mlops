@@ -16,3 +16,22 @@ stages:
     - path: train.arrow
       md5: 62689eaae1a3bb9e30951cba35367e47
       size: 6282
+  train:
+    cmd: python train.py
+    deps:
+    - path: test.arrow
+      md5: 7d1e22b08c103a1d307d1f9b7ed9b2e4
+      size: 3842
+    - path: train.arrow
+      md5: 62689eaae1a3bb9e30951cba35367e47
+      size: 6282
+    - path: train.py
+      md5: cbe01334b826217e26ac0a559bf9a610
+      size: 1029
+    params:
+      params.yaml:
+        train.class_weight: balanced_subsample
+    outs:
+    - path: eval.json
+      md5: 0caa50b46f9fd50a90607709fb1adc7e
+      size: 48

@@ -8,3 +8,14 @@ stages:
     outs:
       - train.arrow
       - test.arrow
+
+  train:
+    cmd: python train.py
+    deps:
+      - train.py
+      - train.arrow
+      - test.arrow
+    metrics:
+      - eval.json
+    params:
+      - train.class_weight

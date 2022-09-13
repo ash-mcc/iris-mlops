@@ -1,0 +1,2 @@
+train:
+  class_weight: "balanced_subsample"
