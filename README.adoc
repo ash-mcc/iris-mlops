@@ -3,3 +3,7 @@
 For tracking ML experiments and operations
 
 Coming soon 🤪
+
+````
+$ dvc repro
+````

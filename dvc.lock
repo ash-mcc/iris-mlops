@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: clj preprocess.clj
+    deps:
+    - path: iris.csv
+      md5: 57fce90c81521889c736445f058c4838
+      size: 3716
+    - path: preprocess.clj
+      md5: 08e0530f523bd9a9065da3710baa035d
+      size: 886
+    outs:
+    - path: test.arrow
+      md5: 7d1e22b08c103a1d307d1f9b7ed9b2e4
+      size: 3842
+    - path: train.arrow
+      md5: 62689eaae1a3bb9e30951cba35367e47
+      size: 6282

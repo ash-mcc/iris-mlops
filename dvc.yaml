@@ -1,0 +1,10 @@
+stages:
+
+  preprocess:
+    cmd: clj preprocess.clj
+    deps:
+      - preprocess.clj
+      - iris.csv
+    outs:
+      - train.arrow
+      - test.arrow
