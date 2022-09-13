@@ -1,3 +1,9 @@
+.calva/
+.clj-kondo/
+.cpcache/
+.lsp/
+.nrepl-port
+
 /iris.csv
 /train.arrow
 /test.arrow
