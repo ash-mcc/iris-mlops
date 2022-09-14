@@ -7,31 +7,72 @@ stages:
       md5: 57fce90c81521889c736445f058c4838
       size: 3716
     - path: preprocess.clj
-      md5: 08e0530f523bd9a9065da3710baa035d
-      size: 886
+      md5: 1f61d931c6f1f13fc13b8eb5ec0b360d
+      size: 1113
     outs:
+    - path: lookup-table.edn
+      md5: 60c1847f0826e6217609ce87fad1d326
+      size: 43
     - path: test.arrow
-      md5: 7d1e22b08c103a1d307d1f9b7ed9b2e4
+      md5: 508bb475107596a8eb0fbf0ddbb50641
       size: 3842
     - path: train.arrow
-      md5: 62689eaae1a3bb9e30951cba35367e47
+      md5: e64e92dcd3032bfebd2a7b98eb6a0716
       size: 6282
   train:
     cmd: python train.py
     deps:
     - path: test.arrow
-      md5: 7d1e22b08c103a1d307d1f9b7ed9b2e4
+      md5: 4781db1c02cfc163e034c5400fbac902
       size: 3842
     - path: train.arrow
-      md5: 62689eaae1a3bb9e30951cba35367e47
+      md5: 24d128b2ff7b0a5a9f4c3ce7cfa174ae
       size: 6282
     - path: train.py
-      md5: cbe01334b826217e26ac0a559bf9a610
-      size: 1029
+      md5: a4e31c6cb77dfa4c4030276e1d3dde8c
+      size: 1329
     params:
       params.yaml:
         train.class_weight: balanced_subsample
     outs:
     - path: eval.json
-      md5: 0caa50b46f9fd50a90607709fb1adc7e
-      size: 48
+      md5: f701bd73da87ff6bb93994070539a97f
+      size: 33
+    - path: model.pickle
+      md5: c811d695c36773d46e79ed1a493e8ef5
+      size: 173703
+  predict:
+    cmd: clj -A:py predict.clj
+    deps:
+    - path: lookup-table.edn
+      md5: 60c1847f0826e6217609ce87fad1d326
+      size: 43
+    - path: model.pickle
+      md5: c811d695c36773d46e79ed1a493e8ef5
+      size: 173703
+    - path: predict.clj
+      md5: 021a6bcd201130102bef4c7783ebc4eb
+      size: 3072
+    outs:
+    - path: predictions.csv
+      md5: 650693eec3e3fcfda19fab07f113ffab
+      size: 270
+  pretrain:
+    cmd: clj pretrain.clj
+    deps:
+    - path: iris.csv
+      md5: 57fce90c81521889c736445f058c4838
+      size: 3716
+    - path: pretrain.clj
+      md5: f78c58896630f4766d8bed8e21bceadd
+      size: 1353
+    outs:
+    - path: lookup-table.edn
+      md5: 60c1847f0826e6217609ce87fad1d326
+      size: 43
+    - path: test.arrow
+      md5: 4781db1c02cfc163e034c5400fbac902
+      size: 3842
+    - path: train.arrow
+      md5: 24d128b2ff7b0a5a9f4c3ce7cfa174ae
+      size: 6282

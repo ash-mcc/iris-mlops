@@ -1,11 +1,12 @@
 stages:
 
-  preprocess:
-    cmd: clj preprocess.clj
+  pretrain:
+    cmd: clj pretrain.clj
     deps:
-      - preprocess.clj
+      - pretrain.clj
       - iris.csv
     outs:
+      - lookup-table.edn
       - train.arrow
       - test.arrow
 
@@ -15,7 +16,18 @@ stages:
       - train.py
       - train.arrow
       - test.arrow
+    outs:
+      - model.pickle
     metrics:
       - eval.json
     params:
       - train.class_weight
+
+  predict:
+     cmd: clj -A:py predict.clj
+     deps:
+       - predict.clj
+       - model.pickle
+       - lookup-table.edn
+     outs:
+       - predictions.csv

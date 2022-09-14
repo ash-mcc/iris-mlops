@@ -2,3 +2,4 @@ pyarrow
 pyyaml
 pandas
 sklearn
+json5

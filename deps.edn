@@ -1,7 +1,28 @@
-{:deps {scicloj/scicloj.ml            {:mvn/version "0.2.1"}
-        clj-python/libpython-clj      {:mvn/version "2.018"}
-        org.apache.arrow/arrow-vector {:mvn/version "6.0.0"}
-        org.lz4/lz4-java              {:mvn/version "1.8.0"}
-        net.java.dev.jna/jna          {:mvn/version "5.10.0"}
-        com.github.luben/zstd-jni     {:mvn/version "1.5.1-1"}
-        clj-commons/clj-yaml          {:mvn/version "0.7.109"}}}
+{:deps    {
+           org.clojure/clojure                         {:mvn/version "1.11.1"}
+           
+           org.clojure/tools.logging                   {:mvn/version "1.2.4"}
+           org.apache.logging.log4j/log4j-api          {:mvn/version "2.18.0"}
+           org.apache.logging.log4j/log4j-core         {:mvn/version "2.18.0"}
+           org.apache.logging.log4j/log4j-slf4j18-impl {:mvn/version "2.18.0"}
+           
+           scicloj/scicloj.ml                          {:mvn/version "0.2.1"}
+           clj-python/libpython-clj                    {:mvn/version "2.018"}
+           org.apache.arrow/arrow-vector               {:mvn/version "6.0.0"}
+           org.lz4/lz4-java                            {:mvn/version "1.8.0"}
+           net.java.dev.jna/jna                        {:mvn/version "5.10.0"}
+           com.github.luben/zstd-jni                   {:mvn/version "1.5.1-1"}
+           clj-commons/clj-yaml                        {:mvn/version "0.7.109"}
+           }
+ :aliases {
+           ;; clj -A:py
+           ;;
+           ;; 
+           ;;
+           :py {:jvm-opts ["-Xmx4g"
+                            "-Dclojure.tools.logging.factory=clojure.tools.logging.impl/log4j2-factory"
+                            "--add-modules" "jdk.incubator.foreign"
+                            "--enable-native-access=ALL-UNNAMED"
+                            "-verbose:jni"]}
+           }
+ }
