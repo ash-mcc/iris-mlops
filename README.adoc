@@ -5,6 +5,7 @@ For tracking ML experiments and operations
 Coming soon 🤪
 
 ```
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
+$ dvc update iris.csv.dvc
 $ dvc repro
 ```
