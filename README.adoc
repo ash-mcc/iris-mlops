@@ -6,6 +6,6 @@ Coming soon 🤪
 
 ```
 $ pip3 install -r requirements.txt
-$ dvc update iris.csv.dvc
+$ dvc update data/iris.csv.dvc
 $ dvc repro
 ```

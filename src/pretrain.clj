@@ -4,9 +4,15 @@
             [tech.v3.libs.arrow :as arrow]))
 
 
+(def iris-filepath (first *command-line-args*))
+(def lookup-table-filepath (second *command-line-args*))
+(def train-filepath (nth *command-line-args* 2))
+(def test-filepath (nth *command-line-args* 3))
+
+
 (println "Loading the dataset for training & testing")
 
-(def raw-ds (-> "iris.csv"
+(def raw-ds (-> iris-filepath
                 (ds/dataset {:key-fn keyword})))
 (println "iris.csv" (ds/shape raw-ds))
 (println (ds/head raw-ds))
@@ -32,17 +38,18 @@
 
 (println "Writing label->numeric lookup-table to file")
 
-(spit "lookup-table.edn" (-> numeric-ds
-                             :species
-                             meta
-                             :categorical-map
-                             :lookup-table
-                             pr-str))
+(spit lookup-table-filepath
+      (-> numeric-ds
+          :species
+          meta
+          :categorical-map
+          :lookup-table
+          pr-str))
 
 (println "Writing training & testing dataset to files")
 
-(arrow/dataset->stream! (:train-ds split) "train.arrow")
-(arrow/dataset->stream! (:test-ds split) "test.arrow")
+(arrow/dataset->stream! (:train-ds split) train-filepath)
+(arrow/dataset->stream! (:test-ds split) test-filepath)
 
 
 (shutdown-agents)

@@ -10,6 +10,11 @@
 (require-python '[pickle])
 
 
+(def model-filepath (first *command-line-args*))
+(def lookup-table-filepath (second *command-line-args*))
+(def predictions-filepath (nth *command-line-args* 2))
+
+
 (println "Establishing the to-be-predicted dataset")
 
 (def to-be-predicted-ds 
@@ -37,12 +42,12 @@
 
 (println "Loading the trained-model")
 
-(def model (pickle/load (builtins/open "model.pickle" "rb")))
+(def model (pickle/load (builtins/open model-filepath "rb")))
 (println "model" model)
 
 (println "Loading the label->numeric lookup-table")
 
-(def lookup-table (->  "lookup-table.edn"
+(def lookup-table (->  lookup-table-filepath
                        slurp
                        edn/read-string
                        set/map-invert))
@@ -81,8 +86,9 @@
 (println "Writing predictions to file")
 
 (-> prediction-ds
-    (ds/write-csv! "predictions.csv"))
+    (ds/write-csv! predictions-filepath))
 
 
 (shutdown-agents)
+
 

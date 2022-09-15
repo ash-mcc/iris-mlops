@@ -3,3 +3,4 @@ pyyaml
 pandas
 sklearn
 json5
+dvclive

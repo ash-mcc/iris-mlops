@@ -20,9 +20,9 @@
            ;; 
            ;;
            :py {:jvm-opts ["-Xmx4g"
-                            "-Dclojure.tools.logging.factory=clojure.tools.logging.impl/log4j2-factory"
-                            "--add-modules" "jdk.incubator.foreign"
-                            "--enable-native-access=ALL-UNNAMED"
-                            "-verbose:jni"]}
+                           "-Dclojure.tools.logging.factory=clojure.tools.logging.impl/log4j2-factory"
+                           "--add-modules" "jdk.incubator.foreign"
+                           "--enable-native-access=ALL-UNNAMED"
+                           "-verbose:jni"]}
            }
  }

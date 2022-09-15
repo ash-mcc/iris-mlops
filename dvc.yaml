@@ -1,33 +1,41 @@
 stages:
 
   pretrain:
-    cmd: clj pretrain.clj
+    cmd: clj src/pretrain.clj data/iris.csv data/lookup-table.edn data/train.arrow data/test.arrow
     deps:
-      - pretrain.clj
-      - iris.csv
+    - src/pretrain.clj
+    - data/iris.csv
     outs:
-      - lookup-table.edn
-      - train.arrow
-      - test.arrow
+    - data/lookup-table.edn
+    - data/train.arrow
+    - data/test.arrow
 
   train:
-    cmd: python3 train.py
+    cmd: python3 src/train.py data/test.arrow data/train.arrow model.pkl scores.json evaluation importance.png
     deps:
-      - train.py
-      - train.arrow
-      - test.arrow
-    outs:
-      - model.pickle
-    metrics:
-      - eval.json
+    - src/train.py
+    - data/test.arrow
+    - data/train.arrow
     params:
-      - train.class_weight
+    - train.class_weight
+    outs:
+    - model.pkl
+    metrics:
+    - scores.json:
+        cache: false
+    plots:
+    - evaluation/importance.png
+    - evaluation/plots/confusion_matrix.json:
+        cache: false
+        template: confusion
+        x: actual
+        y: predicted
 
   predict:
-     cmd: clj -A:py predict.clj
-     deps:
-       - predict.clj
-       - model.pickle
-       - lookup-table.edn
-     outs:
-       - predictions.csv
+    cmd: clj -A:py src/predict.clj model.pkl data/lookup-table.edn data/predictions.csv
+    deps:
+    - src/predict.clj
+    - model.pkl
+    - data/lookup-table.edn
+    outs:
+    - data/predictions.csv

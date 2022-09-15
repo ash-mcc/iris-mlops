@@ -1,78 +1,67 @@
 schema: '2.0'
 stages:
-  preprocess:
-    cmd: clj preprocess.clj
+  pretrain:
+    cmd: clj src/pretrain.clj data/iris.csv data/lookup-table.edn data/train.arrow
+      data/test.arrow
     deps:
-    - path: iris.csv
+    - path: data/iris.csv
       md5: 57fce90c81521889c736445f058c4838
       size: 3716
-    - path: preprocess.clj
-      md5: 1f61d931c6f1f13fc13b8eb5ec0b360d
-      size: 1113
+    - path: src/pretrain.clj
+      md5: 2c132bfd81d82ce48934a4edf9ee0903
+      size: 1476
     outs:
-    - path: lookup-table.edn
+    - path: data/lookup-table.edn
       md5: 60c1847f0826e6217609ce87fad1d326
       size: 43
-    - path: test.arrow
-      md5: 508bb475107596a8eb0fbf0ddbb50641
+    - path: data/test.arrow
+      md5: 5a002e541b62d4d36c03c9b72ed615d3
       size: 3842
-    - path: train.arrow
-      md5: e64e92dcd3032bfebd2a7b98eb6a0716
+    - path: data/train.arrow
+      md5: 8f01a8b967192cc7ed15ac33d8a9e449
       size: 6282
   train:
-    cmd: python train.py
+    cmd: python3 src/train.py data/test.arrow data/train.arrow model.pkl scores.json
+      evaluation importance.png
     deps:
-    - path: test.arrow
-      md5: 4781db1c02cfc163e034c5400fbac902
+    - path: data/test.arrow
+      md5: 5a002e541b62d4d36c03c9b72ed615d3
       size: 3842
-    - path: train.arrow
-      md5: 24d128b2ff7b0a5a9f4c3ce7cfa174ae
+    - path: data/train.arrow
+      md5: 8f01a8b967192cc7ed15ac33d8a9e449
       size: 6282
-    - path: train.py
-      md5: a4e31c6cb77dfa4c4030276e1d3dde8c
-      size: 1329
+    - path: src/train.py
+      md5: 7ed7207683325f042153dfd54557cf1c
+      size: 2601
     params:
       params.yaml:
         train.class_weight: balanced_subsample
     outs:
-    - path: eval.json
-      md5: f701bd73da87ff6bb93994070539a97f
-      size: 33
-    - path: model.pickle
-      md5: c811d695c36773d46e79ed1a493e8ef5
-      size: 173703
+    - path: evaluation/importance.png
+      md5: 08ae50128e9596d086e96c0c67052bd6
+      size: 15866
+    - path: evaluation/plots/confusion_matrix.json
+      md5: dff7def93d8861b0436e8f1402b63783
+      size: 6617
+    - path: model.pkl
+      md5: 0ceda5d2d03f46d00c37091b4d2ed38b
+      size: 101049
+    - path: scores.json
+      md5: 627c8074b95f1e6261638f2d299dd6b5
+      size: 48
   predict:
-    cmd: clj -A:py predict.clj
+    cmd: clj -A:py src/predict.clj model.pkl data/lookup-table.edn data/predictions.csv
     deps:
-    - path: lookup-table.edn
+    - path: data/lookup-table.edn
       md5: 60c1847f0826e6217609ce87fad1d326
       size: 43
-    - path: model.pickle
-      md5: c811d695c36773d46e79ed1a493e8ef5
-      size: 173703
-    - path: predict.clj
-      md5: 021a6bcd201130102bef4c7783ebc4eb
-      size: 3072
+    - path: model.pkl
+      md5: 0ceda5d2d03f46d00c37091b4d2ed38b
+      size: 101049
+    - path: src/predict.clj
+      md5: f842285ae3d983c7befaede43d9057bc
+      size: 3242
     outs:
-    - path: predictions.csv
-      md5: 650693eec3e3fcfda19fab07f113ffab
-      size: 270
-  pretrain:
-    cmd: clj pretrain.clj
-    deps:
-    - path: iris.csv
-      md5: 57fce90c81521889c736445f058c4838
-      size: 3716
-    - path: pretrain.clj
-      md5: f78c58896630f4766d8bed8e21bceadd
-      size: 1353
-    outs:
-    - path: lookup-table.edn
-      md5: 60c1847f0826e6217609ce87fad1d326
-      size: 43
-    - path: test.arrow
-      md5: 4781db1c02cfc163e034c5400fbac902
-      size: 3842
-    - path: train.arrow
-      md5: 24d128b2ff7b0a5a9f4c3ce7cfa174ae
-      size: 6282
+    - path: data/predictions.csv
+      md5: 4937ca4881a901072bebb7e978ef1aa3
+      size: 272

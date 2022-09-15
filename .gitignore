@@ -3,12 +3,8 @@
 .cpcache/
 .lsp/
 .nrepl-port
+.vscode/
 classes/
 
-/iris.csv
-/train.arrow
-/test.arrow
-/eval.json
-/lookup-table.edn
-/model.pickle
-/predictions.csv
+/scores.json
+/model.pkl
