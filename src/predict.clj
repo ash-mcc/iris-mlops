@@ -40,7 +40,7 @@
 (println (ds/head numeric-ds))
 
 
-(println "Loading the trained-model")
+(println "Loading the trained model")
 
 (def model (pickle/load (builtins/open model-filepath "rb")))
 (println "model" model)

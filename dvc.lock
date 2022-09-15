@@ -21,34 +21,21 @@ stages:
       md5: 8f01a8b967192cc7ed15ac33d8a9e449
       size: 6282
   train:
-    cmd: python3 src/train.py data/test.arrow data/train.arrow model.pkl scores.json
-      evaluation importance.png
+    cmd: python3 src/train.py data/train.arrow model.pkl
     deps:
-    - path: data/test.arrow
-      md5: 5a002e541b62d4d36c03c9b72ed615d3
-      size: 3842
     - path: data/train.arrow
       md5: 8f01a8b967192cc7ed15ac33d8a9e449
       size: 6282
     - path: src/train.py
-      md5: f12436c49a6344a8ece41113f5c02752
-      size: 2578
+      md5: c53ea221ed93dc4b2c014ad5872f303b
+      size: 1016
     params:
       params.yaml:
         train.class_weight: balanced_subsample
     outs:
-    - path: evaluation/importance.png
-      md5: 0d257a3143b2f0202f82249421d89daf
-      size: 13790
-    - path: evaluation/plots/confusion_matrix.json
-      md5: dff7def93d8861b0436e8f1402b63783
-      size: 6617
     - path: model.pkl
-      md5: d06491a1f1d871fbed90296eac43f702
-      size: 101218
-    - path: scores.json
-      md5: 627c8074b95f1e6261638f2d299dd6b5
-      size: 48
+      md5: 7a013f5aad71d6323dcdc59f06accd9a
+      size: 151327
   predict:
     cmd: clj -A:py src/predict.clj model.pkl data/lookup-table.edn data/predictions.csv
     deps:
@@ -56,12 +43,35 @@ stages:
       md5: 60c1847f0826e6217609ce87fad1d326
       size: 43
     - path: model.pkl
-      md5: d06491a1f1d871fbed90296eac43f702
-      size: 101218
+      md5: 7a013f5aad71d6323dcdc59f06accd9a
+      size: 151327
     - path: src/predict.clj
-      md5: f842285ae3d983c7befaede43d9057bc
+      md5: 2c455dae5038b573a8d36285381c8f32
       size: 3242
     outs:
     - path: data/predictions.csv
-      md5: b8e38e6304946c2eb740ae731c6e4b05
-      size: 274
+      md5: d6bcf197417a0e120dfc1676cc3e503e
+      size: 270
+  evaluate:
+    cmd: python3 src/evaluate.py model.pkl data/test.arrow scores.json evaluation
+      importance.png
+    deps:
+    - path: data/test.arrow
+      md5: 5a002e541b62d4d36c03c9b72ed615d3
+      size: 3842
+    - path: model.pkl
+      md5: 7a013f5aad71d6323dcdc59f06accd9a
+      size: 151327
+    - path: src/evaluate.py
+      md5: e7c502c27e1fa0b0b758e23dbc783dda
+      size: 1892
+    outs:
+    - path: evaluation/importance.png
+      md5: 8931ff42cf5549f4710c34c08dcedeb3
+      size: 13814
+    - path: evaluation/plots/confusion_matrix.json
+      md5: 5ad6662f7b7434e6a2cf3040e22bbf1d
+      size: 2837
+    - path: scores.json
+      md5: 2efdec5aa1a76d9da65a19dc79007968
+      size: 48

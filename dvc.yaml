@@ -11,15 +11,21 @@ stages:
     - data/test.arrow
 
   train:
-    cmd: python3 src/train.py data/test.arrow data/train.arrow model.pkl scores.json evaluation importance.png
+    cmd: python3 src/train.py data/train.arrow model.pkl
     deps:
     - src/train.py
-    - data/test.arrow
     - data/train.arrow
     params:
     - train.class_weight
     outs:
     - model.pkl
+
+  evaluate:
+    cmd: python3 src/evaluate.py model.pkl data/test.arrow scores.json evaluation importance.png
+    deps:
+    - src/evaluate.py
+    - model.pkl
+    - data/test.arrow
     metrics:
     - scores.json:
         cache: false
