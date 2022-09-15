@@ -88,12 +88,12 @@ with open(metrics_filepath, 'w') as outfile:
         {"train":
          {"mean_accuracy": mean_accuracy}},
         outfile)
-        
+
 fig, axes = plt.subplots(dpi=100)
 fig.subplots_adjust(bottom=0.2, top=0.95)
 importances = model.feature_importances_
 forest_importances = pd.Series(importances, index=X_cols) #.nlargest(n=30)
-axes.set_ylabel("Mean decrease in impurity")
+axes.set_ylabel("Importance")
 forest_importances.plot.bar(ax=axes)
 fig.savefig(importance_filepath)
 
