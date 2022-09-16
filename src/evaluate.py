@@ -43,6 +43,7 @@ X_test = test_df.loc[:, X_cols]
 y_test = test_df.species
 print('X_test {}, y_test {}'.format(X_test.shape, y_test.shape))
 
+
 mean_accuracy =  model.score(X_test, y_test)
 
 
@@ -70,6 +71,7 @@ with open(metrics_filepath, 'w') as outfile:
         outfile)
 
 
+print('Writing features importances chart to file')
 
 start_time = time.time()
 importances = model.feature_importances_
@@ -86,7 +88,8 @@ forest_importances.plot.barh(xerr=std, ax=ax, align="center")
 fig.savefig(importance_filepath)
 
 
-live = Live(live_dir)
+print('Writing confusion matrix to file')
+
 # live.log_plot("roc", y_test, y_hat)#
 # live.log("avg_prec", metrics.average_precision_score(y_test, y_hat))
 # live.log("roc_auc", metrics.roc_auc_score(y_test, y_hat))

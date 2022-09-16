@@ -21,13 +21,13 @@ stages:
     - model.pkl
 
   evaluate:
-    cmd: python3 src/evaluate.py model.pkl data/test.arrow scores.json evaluation importance.png
+    cmd: python3 src/evaluate.py model.pkl data/test.arrow metrics.json evaluation importance.png
     deps:
     - src/evaluate.py
     - model.pkl
     - data/test.arrow
     metrics:
-    - scores.json:
+    - metrics.json:
         cache: false
     plots:
     - evaluation/importance.png

@@ -53,7 +53,7 @@ stages:
       md5: d6bcf197417a0e120dfc1676cc3e503e
       size: 270
   evaluate:
-    cmd: python3 src/evaluate.py model.pkl data/test.arrow scores.json evaluation
+    cmd: python3 src/evaluate.py model.pkl data/test.arrow metrics.json evaluation
       importance.png
     deps:
     - path: data/test.arrow
@@ -63,15 +63,15 @@ stages:
       md5: 7a013f5aad71d6323dcdc59f06accd9a
       size: 151327
     - path: src/evaluate.py
-      md5: 4a9b571fba3684b27be85c0dbdf309fd
-      size: 2471
+      md5: 461da1867107614d7fde902c876ed818
+      size: 2546
     outs:
     - path: evaluation/importance.png
-      md5: ac43b2c872adbcaa1ec3c9e82287eac2
-      size: 17789
+      md5: 5a838138e6192ed14fc5f1538b964f6a
+      size: 15007
     - path: evaluation/plots/confusion_matrix.json
       md5: 5ad6662f7b7434e6a2cf3040e22bbf1d
       size: 2837
-    - path: scores.json
+    - path: metrics.json
       md5: 9d6314582c66b6c8d46be143f3a732b4
       size: 93
