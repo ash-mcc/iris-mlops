@@ -1,4 +1,4 @@
-# ADAPT Consortium - TPG - MLOps
+# iris-mlops
 
 For tracking ML experiments and operations
 
