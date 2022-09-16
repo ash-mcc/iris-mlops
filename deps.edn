@@ -13,6 +13,7 @@
            net.java.dev.jna/jna                        {:mvn/version "5.10.0"}
            com.github.luben/zstd-jni                   {:mvn/version "1.5.1-1"}
            clj-commons/clj-yaml                        {:mvn/version "0.7.109"}
+           org.clojure/data.json                       {:mvn/version "2.4.0"}
            }
  :aliases {
            ;; clj -A:py

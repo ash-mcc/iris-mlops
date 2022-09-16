@@ -14,10 +14,11 @@ from matplotlib import pyplot as plt
 
 
 model_filepath = sys.argv[1]
-test_filepath = sys.argv[2]
-metrics_filepath = sys.argv[3]
-live_dir = sys.argv[4]
-importance_filename = sys.argv[5]
+label_lookup_filepath = sys.argv[2]
+test_filepath = sys.argv[3]
+metrics_filepath = sys.argv[4]
+live_dir = sys.argv[5]
+importance_filename = sys.argv[6]
 
 live = Live(live_dir)
 importance_filepath = os.path.join(live_dir, importance_filename) 
@@ -27,6 +28,11 @@ print('Loading the trained model')
 with open(model_filepath, "rb") as fd:
     model = pickle.load(fd)
 
+
+print('Loading label_lookup')
+with open(label_lookup_filepath, "rb") as fd:
+    label_lookup_raw = json.load(fd)
+label_lookup = {int(k): v for k, v in label_lookup_raw.items()}
 
 print('Loading the testing dataframe')
 
@@ -58,7 +64,11 @@ print('y_hat {} {}'.format(y_hat.shape, y_hat))
 cl_rpt = metrics.classification_report(y_test, y_hat, output_dict=True)
 
 # use the MCC when a binary classifier
-# sklearn.metrics.matthews_corrcoef(y_true, y_pred, *, sample_weight=None)
+#   sklearn.metrics.matthews_corrcoef(y_true, y_pred, *, sample_weight=None)
+# background 
+#   https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6941312
+#     "The advantages of the Matthews correlation coefficient (MCC) over F1 score and accuracy in binary classification evaluation"
+#   https://en.wikipedia.org/wiki/Matthews_correlation_coefficient
 
 
 print('Writing metrics to file')
@@ -92,7 +102,10 @@ print('Writing confusion matrix to file')
 
 # live.log_plot("roc", y_test, y_hat)#
 # live.log("avg_prec", metrics.average_precision_score(y_test, y_hat))
-# live.log("roc_auc", metrics.roc_auc_score(y_test, y_hat))
-live.log_plot("confusion_matrix", y_test.squeeze(), y_hat_proba.argmax(-1))
+# live.log("roc_
+# auc", metrics.roc_auc_score(y_test, y_hat))
+live.log_plot("confusion_matrix", y_test.squeeze().map(lambda x: label_lookup[int(x)]), map(lambda x: label_lookup[int(x)], y_hat))
+# or?...  live.log_plot("confusion_matrix", y_test.squeeze(), y_hat_proba.argmax(-1))
+
 
 

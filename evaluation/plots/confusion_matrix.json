@@ -1,182 +1,182 @@
 [
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "versicolor",
+        "predicted": "virginica"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "2.0",
-        "predicted": "0"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "versicolor",
+        "predicted": "virginica"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "2.0",
-        "predicted": "0"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "virginica",
+        "predicted": "versicolor"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "versicolor",
+        "predicted": "versicolor"
     },
     {
-        "actual": "2.0",
-        "predicted": "2"
+        "actual": "virginica",
+        "predicted": "virginica"
     },
     {
-        "actual": "0.0",
-        "predicted": "0"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "setosa",
+        "predicted": "setosa"
     },
     {
-        "actual": "1.0",
-        "predicted": "1"
+        "actual": "setosa",
+        "predicted": "setosa"
     }
 ]

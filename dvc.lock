@@ -1,30 +1,30 @@
 schema: '2.0'
 stages:
   pretrain:
-    cmd: clj src/pretrain.clj data/iris.csv data/lookup-table.edn data/train.arrow
+    cmd: clj src/pretrain.clj data/iris.csv data/label-lookup.json data/train.arrow
       data/test.arrow
     deps:
     - path: data/iris.csv
       md5: 57fce90c81521889c736445f058c4838
       size: 3716
     - path: src/pretrain.clj
-      md5: 2c132bfd81d82ce48934a4edf9ee0903
-      size: 1476
+      md5: 63b0691f64a93fc0be1dc379da6f63da
+      size: 1569
     outs:
-    - path: data/lookup-table.edn
-      md5: 60c1847f0826e6217609ce87fad1d326
-      size: 43
+    - path: data/label-lookup.json
+      md5: ab647998da67883af4434bc8af71a275
+      size: 47
     - path: data/test.arrow
-      md5: 5a002e541b62d4d36c03c9b72ed615d3
+      md5: d96bb877b208e8047d54e2c15640b677
       size: 3842
     - path: data/train.arrow
-      md5: 8f01a8b967192cc7ed15ac33d8a9e449
+      md5: 4908b7ec0bf7b2869c5838d1c2382517
       size: 6282
   train:
     cmd: python3 src/train.py data/train.arrow model.pkl
     deps:
     - path: data/train.arrow
-      md5: 8f01a8b967192cc7ed15ac33d8a9e449
+      md5: b904544823ac537c727b15460fdc3a7d
       size: 6282
     - path: src/train.py
       md5: c53ea221ed93dc4b2c014ad5872f303b
@@ -34,44 +34,67 @@ stages:
         train.class_weight: balanced_subsample
     outs:
     - path: model.pkl
-      md5: 7a013f5aad71d6323dcdc59f06accd9a
-      size: 151327
+      md5: 0bcd98ebdf18ed1d696f7547f9fdd3e6
+      size: 132402
   predict:
-    cmd: clj -A:py src/predict.clj model.pkl data/lookup-table.edn data/predictions.csv
+    cmd: clj -A:py src/predict.clj model.pkl data/label-lookup.json data/predictions.csv
     deps:
-    - path: data/lookup-table.edn
-      md5: 60c1847f0826e6217609ce87fad1d326
-      size: 43
+    - path: data/label-lookup.json
+      md5: ab647998da67883af4434bc8af71a275
+      size: 47
     - path: model.pkl
-      md5: 7a013f5aad71d6323dcdc59f06accd9a
-      size: 151327
+      md5: 0bcd98ebdf18ed1d696f7547f9fdd3e6
+      size: 132402
     - path: src/predict.clj
-      md5: 2c455dae5038b573a8d36285381c8f32
-      size: 3242
+      md5: 8d59002193156b88814ee1d99ea8679b
+      size: 3222
     outs:
     - path: data/predictions.csv
-      md5: d6bcf197417a0e120dfc1676cc3e503e
-      size: 270
+      md5: 108719a86e996baaff0fd1145aa0f576
+      size: 268
   evaluate:
-    cmd: python3 src/evaluate.py model.pkl data/test.arrow metrics.json evaluation
-      importance.png
+    cmd: python3 src/evaluate.py model.pkl data/label-lookup.json data/test.arrow
+      metrics.json evaluation importance.png
     deps:
+    - path: data/label-lookup.json
+      md5: ab647998da67883af4434bc8af71a275
+      size: 47
     - path: data/test.arrow
-      md5: 5a002e541b62d4d36c03c9b72ed615d3
+      md5: 8e85b73470d13a2694641fe5ddb1e189
       size: 3842
     - path: model.pkl
-      md5: 7a013f5aad71d6323dcdc59f06accd9a
-      size: 151327
+      md5: 0bcd98ebdf18ed1d696f7547f9fdd3e6
+      size: 132402
     - path: src/evaluate.py
-      md5: 461da1867107614d7fde902c876ed818
-      size: 2546
+      md5: dee52ff1e4be7342661df0bcba62a135
+      size: 3178
     outs:
     - path: evaluation/importance.png
-      md5: 5a838138e6192ed14fc5f1538b964f6a
-      size: 15007
+      md5: fb50e7d6bcaa586a3f85e9a2722da914
+      size: 14495
     - path: evaluation/plots/confusion_matrix.json
-      md5: 5ad6662f7b7434e6a2cf3040e22bbf1d
-      size: 2837
+      md5: 5a3ae2ca425d8f8f34fbed2888e17917
+      size: 3410
     - path: metrics.json
-      md5: 9d6314582c66b6c8d46be143f3a732b4
+      md5: 0467bf6d5ba334d51335596a8e90de80
       size: 93
+  prepare:
+    cmd: clj src/prepare.clj data/iris.csv data/label-lookup.json data/train.arrow
+      data/test.arrow
+    deps:
+    - path: data/iris.csv
+      md5: 57fce90c81521889c736445f058c4838
+      size: 3716
+    - path: src/prepare.clj
+      md5: 3a265a6afbde6c42d28fa1ede74ede78
+      size: 1568
+    outs:
+    - path: data/label-lookup.json
+      md5: ab647998da67883af4434bc8af71a275
+      size: 47
+    - path: data/test.arrow
+      md5: 8e85b73470d13a2694641fe5ddb1e189
+      size: 3842
+    - path: data/train.arrow
+      md5: b904544823ac537c727b15460fdc3a7d
+      size: 6282

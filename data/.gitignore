@@ -3,3 +3,4 @@
 /lookup-table.edn
 /train.arrow
 /test.arrow
+/label-lookup.json

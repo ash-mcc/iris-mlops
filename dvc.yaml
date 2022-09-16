@@ -1,12 +1,12 @@
 stages:
 
-  pretrain:
-    cmd: clj src/pretrain.clj data/iris.csv data/lookup-table.edn data/train.arrow data/test.arrow
+  prepare:
+    cmd: clj src/prepare.clj data/iris.csv data/label-lookup.json data/train.arrow data/test.arrow
     deps:
-    - src/pretrain.clj
+    - src/prepare.clj
     - data/iris.csv
     outs:
-    - data/lookup-table.edn
+    - data/label-lookup.json
     - data/train.arrow
     - data/test.arrow
 
@@ -21,9 +21,10 @@ stages:
     - model.pkl
 
   evaluate:
-    cmd: python3 src/evaluate.py model.pkl data/test.arrow metrics.json evaluation importance.png
+    cmd: python3 src/evaluate.py model.pkl data/label-lookup.json data/test.arrow metrics.json evaluation importance.png
     deps:
     - src/evaluate.py
+    - data/label-lookup.json
     - model.pkl
     - data/test.arrow
     metrics:
@@ -36,12 +37,14 @@ stages:
         template: confusion
         x: actual
         y: predicted
+        x_label: Actual class
+        y_label: Predicated class
 
   predict:
-    cmd: clj -A:py src/predict.clj model.pkl data/lookup-table.edn data/predictions.csv
+    cmd: clj -A:py src/predict.clj model.pkl data/label-lookup.json data/predictions.csv
     deps:
     - src/predict.clj
     - model.pkl
-    - data/lookup-table.edn
+    - data/label-lookup.json
     outs:
     - data/predictions.csv

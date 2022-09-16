@@ -1,5 +1,5 @@
 (ns predict
-  (:require [clojure.edn :as edn]
+  (:require [clojure.data.json :as json]
             [clojure.set :as set]
             [libpython-clj2.python :as py]
             [libpython-clj2.require :refer [require-python]]
@@ -11,7 +11,7 @@
 
 
 (def model-filepath (first *command-line-args*))
-(def lookup-table-filepath (second *command-line-args*))
+(def label-lookup-filepath (second *command-line-args*))
 (def predictions-filepath (nth *command-line-args* 2))
 
 
@@ -45,15 +45,14 @@
 (def model (pickle/load (builtins/open model-filepath "rb")))
 (println "model" model)
 
-(println "Loading the label->numeric lookup-table")
+(println "Loading label-lookup")
 
-(def lookup-table (->  lookup-table-filepath
+(def label-lookup (->  label-lookup-filepath
                        slurp
-                       edn/read-string
-                       set/map-invert))
-(println "lookup-table" lookup-table)
-(def labels #_"ordered" (map lookup-table 
-                             (-> lookup-table
+                       (json/read-str :key-fn #(Integer/parseInt %))))
+(println "label-lookup" label-lookup)
+(def labels #_"ordered" (map label-lookup 
+                             (-> label-lookup
                                  keys
                                  sort)))
 
@@ -66,7 +65,7 @@
                                         py/->python)))
 
 (def y_hat-ds (-> (ds/dataset {:species-predicted y_hat-py})
-                  (ds/update-columns :species-predicted (fn [col] (map #(-> % int lookup-table) col)))
+                  (ds/update-columns :species-predicted (fn [col] (map #(-> % int label-lookup) col)))
                   ))
 
 (def y_hat-proba-py (py/py. model "predict_proba" (-> numeric-ds

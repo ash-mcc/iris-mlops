@@ -1,11 +1,13 @@
-(ns pretrain
-  (:require [scicloj.ml.dataset :as ds]
+(ns prepare
+  (:require [clojure.set :as set]
+            [clojure.data.json :as json]
+            [scicloj.ml.dataset :as ds]
             [tech.v3.dataset.column-filters :as cf]
             [tech.v3.libs.arrow :as arrow]))
 
 
 (def iris-filepath (first *command-line-args*))
-(def lookup-table-filepath (second *command-line-args*))
+(def label-lookup-filepath (second *command-line-args*))
 (def train-filepath (nth *command-line-args* 2))
 (def test-filepath (nth *command-line-args* 3))
 
@@ -36,15 +38,16 @@
 (printf "train-ds %s, test-ds %s" (-> split :train-ds ds/shape) (-> split :test-ds ds/shape))
 
 
-(println "Writing label->numeric lookup-table to file")
+(println "Writing label-lookup to file")
 
-(spit lookup-table-filepath
+(spit label-lookup-filepath
       (-> numeric-ds
           :species
           meta
           :categorical-map
           :lookup-table
-          pr-str))
+          set/map-invert
+          json/write-str))
 
 (println "Writing training & testing dataset to files")
 
