@@ -1,8 +1,6 @@
-# iris-mlops
+# iris-mlx
 
-For tracking ML experiments and operations
-
-Coming soon 🤪
+Tracked ML experiments over an Iris dataset.
 
 ```
 $ pip3 install -r requirements.txt
