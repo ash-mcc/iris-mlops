@@ -104,7 +104,7 @@ print('Writing confusion matrix to file')
 # live.log("avg_prec", metrics.average_precision_score(y_test, y_hat))
 # live.log("roc_
 # auc", metrics.roc_auc_score(y_test, y_hat))
-live.log_plot("confusion_matrix", y_test.squeeze().map(lambda x: label_lookup[int(x)]), map(lambda x: label_lookup[int(x)], y_hat))
+live.log_sklearn_plot("confusion_matrix", y_test.squeeze().map(lambda x: label_lookup[int(x)]), map(lambda x: label_lookup[int(x)], y_hat))
 # or?...  live.log_plot("confusion_matrix", y_test.squeeze(), y_hat_proba.argmax(-1))
 
 

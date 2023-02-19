@@ -32,7 +32,7 @@ stages:
         cache: false
     plots:
     - evaluation/importance.png
-    - evaluation/plots/confusion_matrix.json:
+    - evaluation/plots/sklearn/confusion_matrix.json:
         cache: false
         template: confusion
         x: actual

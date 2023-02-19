@@ -1,6 +1,7 @@
-pyarrow
-pyyaml
-pandas
-sklearn
-json5
-dvclive
+dvclive==1.1.2
+matplotlib==3.5.2
+numpy==1.22.3
+pandas==1.4.2
+pyarrow==9.0.0
+PyYAML==6.0
+scikit_learn==1.2.1

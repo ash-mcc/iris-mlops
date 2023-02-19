@@ -3,7 +3,71 @@
 Tracked ML experiments over an Iris dataset.
 
 ```
-$ pip3 install -r requirements.txt
-$ dvc update data/iris.csv.dvc
+$ python3 -m pip install -r requirements.txt
+$ dvc update data/*.dvc
 $ dvc repro
 ```
+
+
+
+
+
+
+//
+// USING PYTHON
+//
+// the process on my machine, logs the following Python related info:
+//
+// [main] I libpython-clj2.python.info - Detecting startup info
+// [main] I libpython-clj2.python - Startup info {:lib-version "3.8", :java-library-path-addendum "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib", :exec-prefix "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8", :executable "/Library/Developer/CommandLineTools/usr/bin/python3", :libnames ("python3.8m" "python3.8"), :prefix "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8", :base-prefix "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8", :libname "python3.8m", :base-exec-prefix "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8", :python-home "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8", :version [3 8 9], :platform "darwin"}
+// [main] I libpython-clj2.python - Prefixing java library path: /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib
+// [main] I libpython-clj2.python - Loading python library: /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.8/lib/libpython3.8.dylib
+// [tech.resource.gc ref thread] I tech.v3.resource.gc - Reference thread starting
+// [main] I tech.v3.datatype.nio-buffer - Unable to find direct buffer constructor - falling back to jdk16 memory model.
+//
+//
+// $ /Library/Developer/CommandLineTools/usr/bin/python3 -VV
+// Python 3.8.9 (default, Apr 13 2022, 08:48:06)
+// [Clang 13.1.6 (clang-1316.0.21.2.5)]
+//
+// $ python3 -VV
+// Python 3.8.9 (default, Apr 13 2022, 08:48:06)
+// [Clang 13.1.6 (clang-1316.0.21.2.5)]
+//
+//
+// $ python3 -m pipreqs.pipreqs
+// $ python3 -m pip install -r requirements.txt
+//
+
+
+
+//
+// USING R
+//
+// the process on my machine, logs the following Python related info:
+//
+// [nREPL-session-105ac449-a200-425d-9266-4e96a26dd8ec] I clojisr.v1.session - [:clojisr.v1.session/make-session {:action :new-session, :id nil, :actual-session-args {:session-type :rserve}}]
+// [nREPL-session-105ac449-a200-425d-9266-4e96a26dd8ec] I clojisr.v1.impl.rserve.proc - [:clojisr.v1.impl.rserve.proc/spawn {:process ("/usr/local/bin/R" "--no-save" "--no-restore-data" "--slave" "-e" "library(Rserve); run.Rserve(port=64020);")}]
+// [nREPL-session-105ac449-a200-425d-9266-4e96a26dd8ec] I clojisr.v1.impl.rserve.session - [:clojisr.v1.impl.rserve.session/rserve-print-loop {:action :started, :session-args {:session-type :rserve}}]
+//
+//
+// $ R
+// R version 4.2.2 (2022-10-31) -- "Innocent and Trusting"
+// Copyright (C) 2022 The R Foundation for Statistical Computing
+// Platform: aarch64-apple-darwin20 (64-bit)
+//
+//
+// > install.packages("RServe")
+// > install.packages("GGally")
+//
+// Needed to install the XQuartz lib (X11 for mac) 
+//    to make clojisr.v1.applications.plotting/plot->file
+//    fully work
+//
+//
+// > x <- installed.packages(); x[ is.na(x[,"Priority"]), c("Package", "Version")]
+// Package        Version
+// "Cairo"        "1.6-0"
+// "GGally"       "2.1.2"
+// "Rserve"       "1.8-12"
+//

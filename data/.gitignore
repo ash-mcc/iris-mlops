@@ -1,6 +1,3 @@
-/iris.csv
-/predictions.csv
-/lookup-table.edn
-/train.arrow
-/test.arrow
-/label-lookup.json
+*
+!.gitignore
+*.dvc

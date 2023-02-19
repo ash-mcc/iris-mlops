@@ -1,10 +1,10 @@
-md5: c6c0150889bb16339fad146044fc99e7
+md5: 04eacce867801c717211f1b32f407cd1
 frozen: true
 deps:
 - path: test/data/iris.csv
   repo:
     url: https://github.com/scicloj/metamorph.ml
-    rev_lock: ff76b2d552d5c3aa20711135d1404d06ba517d70
+    rev_lock: 7407548977d561a3e41fac4adb038bdea88adf2d
 outs:
 - md5: 57fce90c81521889c736445f058c4838
   size: 3716
