@@ -3,9 +3,43 @@
 Tracked ML experiments over an Iris dataset.
 
 ```
-$ python3 -m pip install -r requirements.txt
+# Pre-requisities (year 2022-ish versions - exact version not important)
+$ git --version
+git version 2.32.1
+$ java --version
+openjdk 17.0.6 2023-01-17
+OpenJDK Runtime Environment Homebrew (build 17.0.6+0)
+OpenJDK 64-Bit Server VM Homebrew (build 17.0.6+0, mixed mode, sharing)
+$ clj --version
+Clojure CLI version 1.11.1.1208
+$ python3 -VV
+Python 3.8.9 (default, Apr 13 2022, 08:48:06)
+[Clang 13.1.6 (clang-1316.0.21.2.5)]
+$ dvc --version
+2.43.0
+
+# Get the repo
+$ git clone https://github.com/ash-mcc/iris-mlx.git
+$ cd iris-mlx
+
+# Get the data
 $ dvc update data/*.dvc
-$ dvc repro
+
+# Set-up the Python environment
+$ python3 -m pip install -r requirements.txt
+
+# (Force) run the whole pipeline
+$ dvc repro -f
+
+# Show the metrics 
+$ dvc exp show 
+
+# Pipe those metrics into a CSV
+$ dvc exp show --csv --all-branches > show.csv
+
+# Show those metrics as a parallel coordinates plot
+$ dvc exp show --pcp --all-branches
+
 ```
 
 

@@ -32,7 +32,7 @@ stages:
     params:
       src/params.py:
         random_forest:
-          n_estimators: 100
+          n_estimators: 1
           criterion: gini
           class_weight: balanced_subsample
           n_jobs: -1
@@ -40,8 +40,8 @@ stages:
           verbose: 1
     outs:
     - path: data/model.pkl
-      md5: 5d5c956de87ecc10ea8a3c6e98fc63d8
-      size: 155845
+      md5: 423a2191cf14db2d31f834123cf988cc
+      size: 2936
   predict:
     cmd: clj -M:std:jni src/predict.clj data/model.pkl data/label-lookup.json  data/predictions.csv
     deps:
@@ -49,15 +49,15 @@ stages:
       md5: ab647998da67883af4434bc8af71a275
       size: 47
     - path: data/model.pkl
-      md5: 5d5c956de87ecc10ea8a3c6e98fc63d8
-      size: 155845
+      md5: 423a2191cf14db2d31f834123cf988cc
+      size: 2936
     - path: src/predict.clj
       md5: 03b4f566fe47c1d4f1ea4bdb03d2bcd7
       size: 3982
     outs:
     - path: data/predictions.csv
-      md5: d34e19f9e056954d1f8f5b77ef0476ea
-      size: 272
+      md5: 108719a86e996baaff0fd1145aa0f576
+      size: 268
   evaluate:
     cmd: python3 src/evaluate.py data/model.pkl data/label-lookup.json data/test.arrow
       metrics.json dvclive feat-importance.png confusion_matrix
@@ -66,8 +66,8 @@ stages:
       md5: ab647998da67883af4434bc8af71a275
       size: 47
     - path: data/model.pkl
-      md5: 5d5c956de87ecc10ea8a3c6e98fc63d8
-      size: 155845
+      md5: 423a2191cf14db2d31f834123cf988cc
+      size: 2936
     - path: data/test.arrow
       md5: 08b14919e7b6df6a1ba232c988783afa
       size: 3842
@@ -76,14 +76,14 @@ stages:
       size: 3282
     outs:
     - path: dvclive/plots/images/feat-importance.png
-      md5: 7fe2ae25b6507772099dc3d05fed6d72
-      size: 14969
+      md5: 3fde30252d33b011fe51997551706f94
+      size: 14072
     - path: dvclive/plots/sklearn/confusion_matrix.json
-      md5: c0a673443c7bc37bb16ece773346a09f
-      size: 3432
+      md5: bcb062d3ea900e91cea4fa6c0ee249e3
+      size: 3431
     - path: metrics.json
-      md5: f562d1b7111947a71bdc2b5744397826
-      size: 92
+      md5: 3eb380ec97e9fcfd527fb018ff4b8886
+      size: 62
   prepare:
     cmd: clj src/prepare.clj data/iris.csv data/label-lookup.json data/train.arrow
       data/test.arrow
