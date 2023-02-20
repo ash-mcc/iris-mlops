@@ -29,7 +29,7 @@ def main(train_filepath, params_filepath, model_filepath):
     y_train = train_df.species
     print('X_train, rows x cols {}'.format(X_train.shape))
     print('y_train, rows x cols {}'.format(y_train.shape))
- 
+
     # train the model
     model.fit(X_train, y_train)
 

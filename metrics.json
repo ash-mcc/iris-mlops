@@ -1,1 +1,1 @@
-{"train": {"mean_accuracy": 0.9555555555555556, "weighted_avg_f1_score": 0.9555555555555556}}
+{"test": {"mean_accuracy": 0.9777777777777777, "weighted_avg_f1_score": 0.9778359004165456}}
