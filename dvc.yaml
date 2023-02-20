@@ -1,38 +1,39 @@
 stages:
 
-  prepare:
-    cmd: clj src/prepare.clj data/iris.csv data/label-lookup.json data/train.arrow data/test.arrow
+  prep:
+    cmd: clj -M:std src/prep.clj ${files.source.iris} ${files.prep.label-lookup} ${files.prep.train} ${files.prep.test}
     deps:
-    - src/prepare.clj
-    - data/iris.csv
+      - src/prep.clj
+      - ${files.source.iris}
     outs:
-    - data/label-lookup.json
-    - data/train.arrow
-    - data/test.arrow
+      - ${files.prep.label-lookup}
+      - ${files.prep.train}
+      - ${files.prep.test}
 
   train:
-    cmd: python3 src/train.py data/train.arrow model.pkl
+    cmd: python3 src/train.py ${files.prep.train} ${files.dvc.params} ${files.train.model}
     deps:
-    - src/train.py
-    - data/train.arrow
+      - src/train.py
+      - ${files.prep.train}
     params:
-    - train.class_weight
+      - ${files.dvc.params}:
+        - random_forest
     outs:
-    - model.pkl
+      - ${files.train.model}
 
   evaluate:
-    cmd: python3 src/evaluate.py model.pkl data/label-lookup.json data/test.arrow metrics.json evaluation importance.png
+    cmd: python3 src/evaluate.py ${files.train.model} ${files.prep.label-lookup} ${files.prep.test} ${files.dvc.metrics} ${files.evaluate.live-dir} ${files.evaluate.importance} ${files.evaluate.confusion-matrix}
     deps:
-    - src/evaluate.py
-    - data/label-lookup.json
-    - model.pkl
-    - data/test.arrow
+      - src/evaluate.py
+      - ${files.train.model}
+      - ${files.prep.label-lookup}
+      - ${files.prep.test}
     metrics:
-    - metrics.json:
-        cache: false
+      - ${files.dvc.metrics}:
+          cache: false
     plots:
-    - evaluation/importance.png
-    - evaluation/plots/sklearn/confusion_matrix.json:
+    - ${files.dvc.live}/${files.evaluate.importance}
+    - ${files.dvc.live}/plots/sklearn/${files.evaluate.confusion-matrix}.json:
         cache: false
         template: confusion
         x: actual
@@ -41,10 +42,10 @@ stages:
         y_label: Predicated class
 
   predict:
-    cmd: clj -A:py src/predict.clj model.pkl data/label-lookup.json data/predictions.csv
+    cmd: clj -M:std:jni src/predict.clj ${files.train.model} ${files.prep.label-lookup}  ${files.predict.predictions}
     deps:
-    - src/predict.clj
-    - model.pkl
-    - data/label-lookup.json
+      - src/predict.clj
+      - ${files.train.model}
+      - ${files.prep.label-lookup}
     outs:
-    - data/predictions.csv
+      - ${files.predict.predictions}

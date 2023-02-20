@@ -1,3 +1,5 @@
 *
 !.gitignore
-*.dvc
+!*.dvc
+!label-lookup.json
+/label-lookup.json
