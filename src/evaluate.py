@@ -8,7 +8,6 @@ import pickle
 import json
 import os
 import sys
-import time
 from dvclive import Live
 from matplotlib import pyplot as plt
 
@@ -17,11 +16,7 @@ from matplotlib import pyplot as plt
 # Main fn
 #
 
-def main(model_filepath, label_lookup_filepath, test_filepath, metrics_filepath, live_dir, importance_filename, confusion_matrix_filename):
-    
-    # prep for DVC Live
-    live = Live(live_dir)
-    importance_filepath = os.path.join(live_dir, importance_filename) 
+def main(model_filepath, label_lookup_filepath, test_filepath, metrics_filepath, live_dir, feat_importance_filename, confusion_matrix_name):
 
     # load the trained model
     with open(model_filepath, "rb") as fd:
@@ -69,6 +64,12 @@ def main(model_filepath, label_lookup_filepath, test_filepath, metrics_filepath,
     importances = model.feature_importances_
     std = np.std([tree.feature_importances_ for tree in model.estimators_], axis=0)
     forest_importances = pd.Series(importances, index=X_cols) #.nlargest(n=30)
+        
+    # prep for DVC Live plots etc.
+    live = Live(live_dir)
+    images_dir = os.path.join(live_dir, "plots", "images") 
+    os.makedirs(images_dir, exist_ok=True)
+    importance_filepath = os.path.join(images_dir, feat_importance_filename) 
     
     # plot the feature importances
     fig, ax = plt.subplots(dpi=100)
@@ -80,8 +81,8 @@ def main(model_filepath, label_lookup_filepath, test_filepath, metrics_filepath,
     print(f"Wrote {importance_filepath}")
 
     # save the confusion matrix
-    live.log_sklearn_plot(confusion_matrix_filename, y_test.squeeze().map(lambda x: label_lookup[int(x)]), map(lambda x: label_lookup[int(x)], y_hat))
-    print(f"Wrote {confusion_matrix_filename}")
+    live.log_sklearn_plot(confusion_matrix_name, y_test.squeeze().map(lambda x: label_lookup[int(x)]), map(lambda x: label_lookup[int(x)], y_hat))
+    print(f"Wrote {confusion_matrix_name}")
     
 
 # ------------------------------------------

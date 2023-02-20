@@ -2,7 +2,6 @@
 
 from sklearn.ensemble import RandomForestClassifier
 import pyarrow.feather as feather
-import yaml
 import pickle
 import sys
 import dvc.api as dvc

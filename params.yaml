@@ -3,7 +3,7 @@ files:
   dvc: 
     params: src/params.py
     metrics: metrics.json
-    live: evaluation
+    live: dvclive
 
   source:
     iris: data/iris.csv
@@ -14,11 +14,10 @@ files:
     test: data/test.arrow
 
   train:
-    model: model.pkl
+    model: data/model.pkl
 
   evaluate:
-    live-dir: evaluation
-    importance: importance.png
+    feat-importance: feat-importance.png
     confusion-matrix: confusion_matrix
 
   predict:

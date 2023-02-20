@@ -22,7 +22,7 @@ stages:
       - ${files.train.model}
 
   evaluate:
-    cmd: python3 src/evaluate.py ${files.train.model} ${files.prep.label-lookup} ${files.prep.test} ${files.dvc.metrics} ${files.evaluate.live-dir} ${files.evaluate.importance} ${files.evaluate.confusion-matrix}
+    cmd: python3 src/evaluate.py ${files.train.model} ${files.prep.label-lookup} ${files.prep.test} ${files.dvc.metrics} ${files.dvc.live} ${files.evaluate.feat-importance} ${files.evaluate.confusion-matrix}
     deps:
       - src/evaluate.py
       - ${files.train.model}
@@ -32,14 +32,14 @@ stages:
       - ${files.dvc.metrics}:
           cache: false
     plots:
-    - ${files.dvc.live}/${files.evaluate.importance}
-    - ${files.dvc.live}/plots/sklearn/${files.evaluate.confusion-matrix}.json:
-        cache: false
-        template: confusion
-        x: actual
-        y: predicted
-        x_label: Actual class
-        y_label: Predicated class
+      - ${files.dvc.live}/plots/images/${files.evaluate.feat-importance}
+      - ${files.dvc.live}/plots/sklearn/${files.evaluate.confusion-matrix}.json:
+         cache: false
+         template: confusion
+         x: actual
+         y: predicted
+         x_label: Actual class
+         y_label: Predicated class
 
   predict:
     cmd: clj -M:std:jni src/predict.clj ${files.train.model} ${files.prep.label-lookup}  ${files.predict.predictions}
